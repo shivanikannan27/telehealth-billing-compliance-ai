@@ -1,4 +1,87 @@
 # Phase 2 Feedback and Refinement Report
+## 1. Feedback Received and Changes Applied
+
+The first QCraque evaluation identified three improvement areas:
+
+### Feedback 1 — Add More Specific Prompt Details
+
+**Feedback received:**
+
+The structured prompt templates needed clearer details about their structure, usage, and expected outputs.
+
+**Change implemented:**
+
+The prompt templates were expanded to include:
+
+- Explicit system roles
+- Objectives
+- Input variables
+- Detailed instructions
+- Safety constraints
+- JSON output schemas
+- Realistic example inputs
+- Expected example outputs
+- Business-value mapping
+
+**Result:**
+
+The templates now provide sufficient information for a developer to understand how each prompt could be integrated into an LLM application.
+
+---
+
+### Feedback 2 — Demonstrate Feedback Incorporation
+
+**Feedback received:**
+
+The evaluation indicated that the repository did not clearly demonstrate how feedback influenced the prompt design.
+
+**Change implemented:**
+
+A formal feedback-to-refinement section was added to this report.
+
+The refinement process now explicitly documents:
+
+```text
+Feedback
+   ↓
+Problem Identified
+   ↓
+Prompt Modification
+   ↓
+Expected Improvement
+Result:
+
+The repository now provides traceability between evaluation feedback and changes made to the prompt templates.
+
+Feedback 3 — Improve Project Summary
+
+Feedback received:
+
+The README needed clearer project objectives and outcomes.
+
+Change implemented:
+
+The README was expanded to describe:
+
+Phase 2 objectives
+Three AI use cases
+Prompt engineering approach
+Safety mechanisms
+Expected outcomes
+Phase 2 deliverables
+Future implementation
+
+Result:
+
+The README now provides a clearer overview of the work completed during Phase 2.
+
+2. Refinement Traceability
+Feedback	Problem	Change Made	Expected Improvement
+More prompt details needed	Templates were too high-level	Added variables, instructions, JSON schemas and examples	Better clarity and implementation readiness
+Feedback process unclear	Refinement was not traceable	Added feedback-to-change mapping	Demonstrates iteration
+README lacked detail	Objectives and outcomes were unclear	Expanded project summary	Better project understanding
+
+
 
 ## 1. Purpose
 
