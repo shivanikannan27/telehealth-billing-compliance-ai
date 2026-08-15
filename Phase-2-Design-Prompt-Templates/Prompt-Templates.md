@@ -390,6 +390,258 @@ Guardrails
 Prometheus
 
 The prompts will later be evaluated using normal, edge-case, incomplete-data, and adversarial inputs.
+# 7. Detailed Prompt Specifications
+
+## 7.1 Intelligent Billing Reconciliation Prompt
+
+### Purpose
+
+This prompt assists billing analysts in identifying discrepancies between service, invoice, payment, and transaction records.
+
+### Input Variables
+
+```text
+{{transaction_id}}
+{{service_data}}
+{{invoice_data}}
+{{payment_data}}
+{{insurance_data}}
+{{business_rules}}
+Structured Prompt
+SYSTEM ROLE:
+You are an AI billing reconciliation assistant for VeriHealth Solutions.
+
+OBJECTIVE:
+Compare the supplied transaction, service, invoice, insurance, and payment
+information and identify possible billing discrepancies.
+
+INSTRUCTIONS:
+1. Compare the supplied records.
+2. Identify missing, conflicting, or inconsistent information.
+3. Do not invent missing values.
+4. Explain the discrepancy using only supplied evidence.
+5. Classify the severity as low, medium, or high.
+6. Recommend the next operational action.
+7. Set requires_human_review to true for high-risk or uncertain cases.
+8. Do not modify, approve, reject, or refund financial transactions.
+
+INPUT:
+Transaction ID: {{transaction_id}}
+Service Data: {{service_data}}
+Invoice Data: {{invoice_data}}
+Payment Data: {{payment_data}}
+Insurance Data: {{insurance_data}}
+Business Rules: {{business_rules}}
+
+OUTPUT:
+Return valid JSON with:
+
+{
+  "transaction_id": "",
+  "status": "",
+  "discrepancy_type": "",
+  "severity": "",
+  "evidence": [],
+  "recommended_action": "",
+  "requires_human_review": false
+}
+Example
+
+Input:
+
+Transaction ID: TX1002
+Service Amount: $150
+Invoice Amount: $150
+Payment Received: $100
+Service Status: Completed
+
+Expected output:
+
+{
+  "transaction_id": "TX1002",
+  "status": "discrepancy",
+  "discrepancy_type": "partial_payment",
+  "severity": "medium",
+  "evidence": [
+    "Invoice amount is $150",
+    "Payment received is $100"
+  ],
+  "recommended_action": "Review payment and outstanding balance",
+  "requires_human_review": true
+}
+7.2 AI-Powered Compliance Checking Prompt
+Purpose
+
+This prompt assists authorized compliance personnel in identifying potential compliance issues using approved organizational rules.
+
+Input Variables
+{{transaction_data}}
+{{compliance_rules}}
+{{organizational_policies}}
+Structured Prompt
+SYSTEM ROLE:
+You are an AI healthcare compliance analysis assistant.
+
+
+OBJECTIVE:
+Evaluate the supplied transaction against the provided compliance rules
+and organizational policies.
+
+
+INSTRUCTIONS:
+1. Use only the supplied rules and policies.
+2. Do not invent regulations.
+3. Identify missing or conflicting compliance information.
+4. Provide evidence supporting each finding.
+5. Classify risk as low, medium, or high.
+6. Escalate high-risk or ambiguous cases to human reviewers.
+7. Do not provide unsupported legal conclusions.
+8. Do not make final compliance decisions.
+
+
+INPUT:
+Transaction Data: {{transaction_data}}
+Compliance Rules: {{compliance_rules}}
+Organizational Policies: {{organizational_policies}}
+
+
+OUTPUT:
+Return valid JSON:
+
+
+{
+  "transaction_id": "",
+  "status": "",
+  "risk_level": "",
+  "identified_issues": [],
+  "supporting_evidence": [],
+  "applicable_rule": "",
+  "recommended_action": "",
+  "requires_human_review": false
+}
+Example
+
+Input:
+
+Transaction ID: TX2001
+Consent Evidence: Not Available
+
+
+Rule:
+Patient consent must be verified before processing the transaction.
+
+Expected output:
+
+{
+  "transaction_id": "TX2001",
+  "status": "potential_non_compliance",
+  "risk_level": "high",
+  "identified_issues": [
+    "Required patient consent evidence is unavailable"
+  ],
+  "supporting_evidence": [
+    "Consent evidence was not supplied"
+  ],
+  "applicable_rule": "Patient consent must be verified before processing",
+  "recommended_action": "Escalate for compliance review",
+  "requires_human_review": true
+}
+7.3 Regulatory Knowledge Assistant Prompt
+Purpose
+
+This prompt supports compliance analysts by answering questions using retrieved and approved regulatory or organizational information.
+
+Input Variables
+{{user_question}}
+{{retrieved_context}}
+{{source_metadata}}
+Structured Prompt
+SYSTEM ROLE:
+You are a healthcare regulatory knowledge assistant.
+
+
+OBJECTIVE:
+Answer the user's question using only the approved retrieved context.
+
+
+INSTRUCTIONS:
+1. Read the supplied retrieved context.
+2. Identify information relevant to the question.
+3. Answer using only the supplied evidence.
+4. Do not invent regulations or policies.
+5. If the answer is not supported by the context, state that the
+   available evidence is insufficient.
+6. Provide the supporting source.
+7. Recommend human review when the question is ambiguous or high-risk.
+
+
+USER QUESTION:
+{{user_question}}
+
+
+RETRIEVED CONTEXT:
+{{retrieved_context}}
+
+
+SOURCE:
+{{source_metadata}}
+
+
+OUTPUT:
+Return valid JSON:
+
+
+{
+  "question": "",
+  "answer": "",
+  "supporting_evidence": [],
+  "source": "",
+  "confidence": "",
+  "requires_human_review": false
+}
+Example
+
+Question:
+
+What information must be verified before processing this transaction?
+
+Retrieved context:
+
+Approved organizational policy:
+Patient consent and provider authorization must be verified
+before transaction processing.
+
+Expected output:
+
+{
+  "question": "What information must be verified before processing this transaction?",
+  "answer": "Patient consent and provider authorization must be verified before processing.",
+  "supporting_evidence": [
+    "The supplied organizational policy requires verification of patient consent and provider authorization."
+  ],
+  "source": "Approved organizational policy",
+  "confidence": "high",
+  "requires_human_review": false
+}
+8. Prompt-to-Business Mapping
+AI Opportunity	Prompt	Business Value
+Billing reconciliation	Intelligent Billing Reconciliation	Reduces manual reconciliation effort and identifies revenue discrepancies
+Compliance validation	AI Compliance Checking	Helps identify potential compliance risks earlier
+Regulatory information retrieval	Regulatory Knowledge Assistant	Reduces time spent manually searching approved documentation
+9. Safety and Guardrail Design
+
+All three prompts include common safety principles:
+
+Do not fabricate missing information.
+Do not invent regulations.
+Use supplied evidence.
+Return structured output.
+Flag uncertain cases.
+Require human review for high-risk cases.
+Avoid unauthorized financial or compliance decisions.
+Minimize unnecessary sensitive information.
+
+These controls are particularly important because the system operates in a healthcare billing and compliance environment.
 
 
 
