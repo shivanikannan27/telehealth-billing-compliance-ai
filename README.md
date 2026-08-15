@@ -118,3 +118,80 @@ Phase 5
 AI Output Evaluation
         ↓
 Scalable AI-Assisted Billing & Compliance PoC
+# Phase 2 — Design Prompt Templates
+
+## Objective
+
+Phase 2 focuses on designing structured prompt templates for the AI opportunities identified during Phase 1.
+
+The goal is to create reusable prompts that can later be connected to OpenAI or Gemini through a FastAPI-based backend.
+
+## AI Use Cases
+
+Three priority AI capabilities were selected:
+
+### 1. Intelligent Billing Reconciliation
+
+The AI compares billing transactions, invoices, service records, payment information, and business rules to identify discrepancies.
+
+Expected benefits:
+
+- Reduced manual reconciliation
+- Faster discrepancy detection
+- Reduced revenue leakage
+- Consistent analysis
+
+### 2. AI-Powered Compliance Checking
+
+The AI evaluates supplied transactions against approved compliance rules and organizational policies.
+
+Expected benefits:
+
+- Earlier identification of potential compliance issues
+- Consistent compliance analysis
+- Reduced manual review workload
+- Better risk prioritization
+
+### 3. Regulatory Knowledge Assistant
+
+A future RAG-based assistant will retrieve relevant approved regulatory and organizational documents and provide grounded responses to compliance questions.
+
+Expected benefits:
+
+- Faster access to compliance information
+- Evidence-based answers
+- Reduced unsupported AI responses
+- Source traceability
+
+## Prompt Engineering Approach
+
+The prompts use:
+
+- Role definition
+- Explicit objectives
+- Context injection
+- Reusable variables
+- Structured instructions
+- JSON output
+- Evidence requirements
+- Missing-data handling
+- Human-review escalation
+- Safety constraints
+- RAG grounding
+
+## Example Prompt Flow
+
+```text
+Business Scenario
+       ↓
+Identify Required Inputs
+       ↓
+Prompt Template
+       ↓
+LLM
+       ↓
+Structured JSON Output
+       ↓
+Validation
+       ↓
+Human Review when Required
