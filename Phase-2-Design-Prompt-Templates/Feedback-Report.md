@@ -1,201 +1,182 @@
-# Phase 2 Feedback and Refinement Report
-## 1. Feedback Received and Changes Applied
-
-The first QCraque evaluation identified three improvement areas:
-
-### Feedback 1 — Add More Specific Prompt Details
-
-**Feedback received:**
-
-The structured prompt templates needed clearer details about their structure, usage, and expected outputs.
-
-**Change implemented:**
-
-The prompt templates were expanded to include:
-
-- Explicit system roles
-- Objectives
-- Input variables
-- Detailed instructions
-- Safety constraints
-- JSON output schemas
-- Realistic example inputs
-- Expected example outputs
-- Business-value mapping
-
-**Result:**
-
-The templates now provide sufficient information for a developer to understand how each prompt could be integrated into an LLM application.
-
----
-
-### Feedback 2 — Demonstrate Feedback Incorporation
-
-**Feedback received:**
-
-The evaluation indicated that the repository did not clearly demonstrate how feedback influenced the prompt design.
-
-**Change implemented:**
-
-A formal feedback-to-refinement section was added to this report.
-
-The refinement process now explicitly documents:
-
-```text
-Feedback
-   ↓
-Problem Identified
-   ↓
-Prompt Modification
-   ↓
-Expected Improvement
-Result:
-
-The repository now provides traceability between evaluation feedback and changes made to the prompt templates.
-
-Feedback 3 — Improve Project Summary
-
-Feedback received:
-
-The README needed clearer project objectives and outcomes.
-
-Change implemented:
-
-The README was expanded to describe:
-
-Phase 2 objectives
-Three AI use cases
-Prompt engineering approach
-Safety mechanisms
-Expected outcomes
-Phase 2 deliverables
-Future implementation
-
-Result:
-
-The README now provides a clearer overview of the work completed during Phase 2.
-
-2. Refinement Traceability
-Feedback	Problem	Change Made	Expected Improvement
-More prompt details needed	Templates were too high-level	Added variables, instructions, JSON schemas and examples	Better clarity and implementation readiness
-Feedback process unclear	Refinement was not traceable	Added feedback-to-change mapping	Demonstrates iteration
-README lacked detail	Objectives and outcomes were unclear	Expanded project summary	Better project understanding
-
-
+# Phase 2 Feedback and Iteration Report
 
 ## 1. Purpose
 
-This report documents the review and refinement process for the prompt templates developed for the VeriHealth telehealth billing and compliance system.
+This report documents the feedback received during the Phase 2 review
+process and the changes made to improve the structured prompt templates.
 
-The objective was to improve prompt clarity, healthcare safety, structured output, grounding, and suitability for future LLM integration.
+The refinement process followed:
 
-## 2. Initial Prompt Design
+Initial Design
+→ Evaluation
+→ Feedback
+→ Prompt Refinement
+→ Re-evaluation
 
-The initial design focused on three priority use cases:
+The main areas of improvement were prompt specificity, structured
+outputs, healthcare safety, evidence grounding, and human oversight.
 
-1. Intelligent Billing Reconciliation
-2. AI-Powered Compliance Checking
-3. Regulatory Knowledge Assistant
+---
 
-The initial templates included role definitions, objectives, input context, instructions, and expected outputs.
+# 2. Initial Design
 
-## 3. Review Findings
+The initial Phase 2 approach focused on creating prompt templates for the
+priority AI opportunities identified during Phase 1.
 
-The prompt review identified several areas requiring improvement.
+The initial templates contained:
 
-### Finding 1 — Instructions Needed to Be More Explicit
+- Role definitions
+- Objectives
+- Input context
+- General instructions
+- Expected outputs
+- Basic safety constraints
 
-Broad instructions can lead to inconsistent model behavior.
+However, the initial design did not provide enough direct evidence of
+detailed prompt structure, iteration, or testing.
 
-**Improvement:**
+---
 
-The prompts were refined with numbered instructions and explicit expected behaviors.
+# 3. Feedback Received
 
-### Finding 2 — Free-Form Output Could Be Difficult to Process
+The QCraque evaluation identified the following improvement areas.
 
-Unstructured responses would make integration with backend services difficult.
+## Feedback 1 — Provide Structured Prompt Templates
 
-**Improvement:**
+### Feedback
 
-JSON-based structured outputs were introduced for all three prompts.
+The repository needed clearer evidence of actual structured prompt
+templates rather than only descriptions of prompt design.
 
-### Finding 3 — Missing Information Could Cause Unsupported Assumptions
+### Problem Identified
 
-The model could potentially infer information that was not supplied.
+High-level descriptions do not demonstrate how a developer would actually
+use the prompt.
 
-**Improvement:**
+### Change Made
 
-Each prompt now includes an `insufficient_data` outcome and explicitly instructs the model not to guess.
+The `Prompt-Templates.md` file was expanded to include complete reusable
+templates containing:
 
-### Finding 4 — Compliance Responses Must Be Grounded
-
-A general-purpose LLM may generate unsupported regulatory information.
-
-**Improvement:**
-
-The Regulatory Knowledge Assistant was designed to use retrieved and approved regulatory context as the basis for its response.
-
-### Finding 5 — High-Risk Decisions Require Human Oversight
-
-Healthcare billing and compliance decisions should not be fully delegated to an AI system.
-
-**Improvement:**
-
-A `requires_human_review` field was added to the structured outputs, and high-risk or ambiguous cases are explicitly escalated.
-
-### Finding 6 — Adversarial Inputs Need to Be Considered
-
-Users may attempt to override system instructions or request unsupported decisions.
-
-**Improvement:**
-
-The prompts include constraints against instruction overrides, unsupported regulatory claims, and unauthorized automated decisions.
-
-## 4. Iteration Summary
-
-| Area | Initial Approach | Refined Approach |
-|---|---|---|
-| Instructions | General instructions | Explicit numbered instructions |
-| Output | Free-form | Structured JSON |
-| Missing data | Potential inference | `insufficient_data` handling |
-| Compliance | General LLM knowledge | Approved/retrieved context |
-| High-risk cases | No explicit escalation | Human-review flag |
-| Prompt injection | Limited handling | Explicit safety constraints |
-| Backend integration | Difficult to parse | JSON-compatible output |
-| Evaluation | Basic examples | Normal, edge-case, and adversarial tests |
-
-## 5. Final Prompt Design Principles
-
-The refined prompts follow these principles:
-
-- Clear role definition
-- Explicit objectives
-- Controlled context
-- Reusable input variables
-- Structured outputs
-- Evidence-based responses
-- Insufficient-data handling
-- Human-in-the-loop review
-- Regulatory grounding
+- System role
+- Purpose
+- Input variables
+- Explicit instructions
+- Validation rules
 - Safety constraints
-- Evaluation readiness
+- Output JSON schemas
+- Example inputs
+- Expected outputs
+- Human-review conditions
 
-## 6. Key Outcome
+### Result
 
-The refinement process transformed the initial prompt concepts into structured templates that are better suited for practical LLM integration.
+The repository now contains copy-paste-ready prompt templates for:
 
-The final templates are designed to support the next phase while reducing the risk of hallucination, unsupported compliance claims, malformed outputs, and inappropriate automation.
+1. Billing Reconciliation
+2. Billing Error Detection
+3. Compliance Risk Summarization
+4. Regulatory Knowledge Assistant
 
-## 7. Next Steps
+---
 
-The refined prompts will be used in the next phase to implement actual LLM API integration.
+# 4. Feedback 2 — Improve Documentation
 
-Future work will include:
+### Feedback
 
-- Connecting the prompts to OpenAI or Gemini
-- Testing model responses programmatically
-- Validating structured outputs
-- Measuring response quality
-- Testing adversarial inputs
-- Integrating RAG for regulatory information
-- Adding additional guardrails
+The evaluator indicated that the repository needed clearer
+documentation explaining the context and usage of each template.
+
+### Problem Identified
+
+The purpose of each prompt and its position in the overall workflow were
+not sufficiently explicit.
+
+### Change Made
+
+`Prompt-Documentation.md` was expanded to document:
+
+- Business problem
+- Prompt purpose
+- Intended users
+- Required inputs
+- Processing behavior
+- Expected outputs
+- Human-review conditions
+- RAG integration
+- Safety considerations
+- Future system integration
+
+### Result
+
+A developer can now understand when and how each prompt should be used.
+
+---
+
+# 5. Feedback 3 — Add Testing Evidence
+
+### Feedback
+
+The evaluation required stronger evidence that the prompt templates could
+handle realistic inputs and edge cases.
+
+### Problem Identified
+
+Simply describing a prompt does not demonstrate how it behaves with
+different types of input.
+
+### Change Made
+
+`Prompt-Evaluation.md` was expanded with test scenarios covering:
+
+- Normal billing transactions
+- Payment discrepancies
+- Missing information
+- Missing insurance information
+- Compliance risks
+- Insufficient regulatory context
+- Grounded regulatory questions
+- Missing retrieved context
+- Edge cases
+- Safety conditions
+
+### Result
+
+The project now documents expected behavior for normal, incomplete,
+conflicting, and high-risk scenarios.
+
+---
+
+# 6. Feedback 4 — Demonstrate Iteration
+
+### Feedback
+
+The evaluation indicated that the repository did not clearly show how
+feedback resulted in specific prompt changes.
+
+### Problem Identified
+
+The previous documentation described refinement but did not clearly show
+the relationship between the original prompt, the identified weakness,
+and the revised prompt.
+
+### Change Made
+
+A direct iteration evidence document was created:
+
+`Prompt-Iteration-Evidence.md`
+
+The document records:
+
+```text
+Initial Prompt
+      ↓
+Problem Identified
+      ↓
+Feedback
+      ↓
+Prompt Modification
+      ↓
+Test Scenario
+      ↓
+Expected Improvement
