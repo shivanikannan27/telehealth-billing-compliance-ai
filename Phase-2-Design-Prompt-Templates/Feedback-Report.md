@@ -180,3 +180,204 @@ Prompt Modification
 Test Scenario
       ↓
 Expected Improvement
+Result
+
+The project now provides traceability between feedback, prompt changes,
+and evaluation scenarios.
+
+7. Iteration Example — Billing Reconciliation
+Initial Version
+Compare the billing transaction with the invoice and payment information.
+Identify discrepancies and recommend an action.
+Problem
+
+The instruction did not define:
+
+Input variables
+Output structure
+Severity
+Missing-data behavior
+Human-review conditions
+Financial decision boundaries
+Feedback
+
+The prompt needed to be more specific and implementation-ready.
+
+Revised Version
+
+The revised prompt now defines:
+
+SYSTEM ROLE:
+You are an enterprise healthcare billing reconciliation assistant.
+
+
+INPUT VARIABLES:
+{{transaction_id}}
+{{service_data}}
+{{invoice_data}}
+{{insurance_data}}
+{{payment_data}}
+
+
+INSTRUCTIONS:
+1. Compare supplied records.
+2. Identify discrepancies.
+3. Do not invent missing values.
+4. Provide supporting evidence.
+5. Classify severity.
+6. Recommend the next action.
+7. Escalate uncertain or high-risk cases.
+
+
+OUTPUT:
+Return structured JSON.
+Improvement
+
+The revised prompt provides predictable fields and clearer boundaries,
+making it easier to validate and integrate into a backend service.
+
+8. Iteration Example — Compliance Checking
+Initial Version
+Check this healthcare transaction for compliance issues.
+Problem
+
+The prompt did not define which regulatory or organizational information
+should be used.
+
+This could result in unsupported compliance claims.
+
+Feedback
+
+Compliance analysis should be based on approved information and should
+not allow the model to invent regulatory requirements.
+
+Revised Version
+
+The revised prompt requires:
+
+Supplied compliance rules
+Organizational policies
+Supporting evidence
+Risk classification
+Insufficient-data handling
+Human-review escalation
+
+It also explicitly states:
+
+Do not invent regulations.
+
+
+Do not provide unsupported legal conclusions.
+
+
+Use only the supplied compliance context.
+Improvement
+
+This creates a stronger grounding boundary for healthcare compliance
+analysis.
+
+9. Iteration Example — Regulatory Knowledge Assistant
+Initial Version
+Answer the user's healthcare compliance question.
+Problem
+
+The model could potentially answer using general knowledge rather than
+approved regulatory information.
+
+Feedback
+
+Regulatory answers should be grounded in retrieved and approved
+information.
+
+Revised Version
+
+The revised prompt requires:
+
+User Question
+      ↓
+Retrieved Regulatory Context
+      ↓
+LLM
+      ↓
+Evidence-Based Answer
+      ↓
+Source
+      ↓
+Confidence
+
+The prompt explicitly states:
+
+Use only the retrieved regulatory context.
+
+
+Do not invent regulatory requirements.
+
+
+If the retrieved context is insufficient,
+state that the evidence is insufficient.
+Improvement
+
+This provides the foundation for a future Retrieval-Augmented Generation
+pipeline.
+
+10. Feedback-to-Change Matrix
+Feedback	Problem	Change	Evidence
+More structured prompts needed	Templates were high-level	Added complete prompt specifications	Prompt-Templates.md
+Usage was unclear	Context and workflow were not explicit	Added detailed documentation	Prompt-Documentation.md
+Testing evidence needed	Behavior across inputs was unclear	Added evaluation scenarios	Prompt-Evaluation.md
+Iteration was unclear	Feedback-to-change relationship was not visible	Added iteration evidence	Prompt-Iteration-Evidence.md
+Healthcare safety needed stronger boundaries	Risk of unsupported claims	Added grounding, evidence, and human review	All prompt files
+11. Final Refinements
+
+The final prompt templates now include:
+
+Explicit roles
+Reusable variables
+Detailed instructions
+Structured JSON output
+Example inputs
+Expected outputs
+Missing-data handling
+Evidence requirements
+Human-review escalation
+Regulatory grounding
+Safety constraints
+RAG readiness
+Adversarial considerations
+12. Outcome
+
+The Phase 2 prompt-design process evolved from high-level AI concepts
+into implementation-oriented prompt templates.
+
+The final artifacts provide:
+
+Actual structured prompts.
+Documentation explaining how they are used.
+Evaluation scenarios and expected behavior.
+Traceable feedback and refinement evidence.
+
+These artifacts provide the foundation for connecting the prompts to an
+actual LLM API during the next implementation phase.
+
+13. Note on Testing
+
+The examples in the prompt and evaluation documents represent expected
+behavior and test specifications.
+
+Actual model-generated outputs will be captured during the next phase
+when the prompts are connected to an OpenAI or Gemini API.
+
+This distinction ensures that expected outputs are not incorrectly
+presented as production model results.
+
+
+
+### Commit it
+
+
+Use:
+
+
+```text
+Complete Phase 2 feedback and iteration evidence
+
