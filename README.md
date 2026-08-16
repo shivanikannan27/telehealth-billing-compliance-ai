@@ -195,3 +195,162 @@ Structured JSON Output
 Validation
        ↓
 Human Review when Required
+# Phase 2 — Design Prompt Templates
+
+## Objective
+
+Phase 2 converts the AI opportunities identified in Phase 1 into reusable,
+structured prompt templates for healthcare billing and compliance workflows.
+
+The objective is to create prompts that are:
+
+- Clear and reusable
+- Structured for application integration
+- Grounded in supplied evidence
+- Safe for healthcare-related workflows
+- Capable of handling incomplete information
+- Designed for human oversight
+
+## AI Use Cases
+
+Four structured prompt templates were developed:
+
+### 1. Billing Reconciliation
+
+Identifies discrepancies between service, invoice, insurance, and payment
+information.
+
+### 2. Billing Error Detection
+
+Identifies missing fields, inconsistent billing information, possible
+duplicates, and other billing errors before final processing.
+
+### 3. Compliance Risk Summarization
+
+Converts compliance findings into a standardized risk summary containing
+evidence, risk level, regulatory basis, and recommended action.
+
+### 4. Regulatory Knowledge Assistant
+
+Provides grounded answers to billing and compliance questions using
+retrieved regulatory and organizational context.
+
+## Prompt Structure
+
+Each template contains:
+
+- Purpose
+- Input variables
+- System role
+- Explicit instructions
+- Validation rules
+- Safety constraints
+- Structured JSON output
+- Example input
+- Expected output
+- Human-review conditions
+
+## Prompt Engineering Techniques
+
+The templates demonstrate:
+
+- Role prompting
+- Context injection
+- Explicit task instructions
+- Reusable prompt variables
+- Structured JSON output
+- Evidence-based responses
+- Missing-data handling
+- Human-in-the-loop escalation
+- RAG grounding
+- Prompt-injection considerations
+
+## Evaluation
+
+The prompts were evaluated against:
+
+- Normal billing transactions
+- Payment discrepancies
+- Missing information
+- Conflicting information
+- Compliance risks
+- Insufficient regulatory context
+- Grounded regulatory questions
+- Missing retrieved context
+- Adversarial instructions
+
+The evaluation defines expected behavior for each scenario and identifies
+areas requiring human review.
+
+## Feedback and Iteration
+
+The prompt design followed an iterative process:
+
+```text
+Initial Prompt
+      ↓
+Evaluation
+      ↓
+Feedback
+      ↓
+Problem Identification
+      ↓
+Prompt Refinement
+      ↓
+Re-evaluation
+The refinement process resulted in:
+
+More explicit prompt instructions
+Reusable input variables
+Structured JSON schemas
+Example inputs and outputs
+Stronger missing-data handling
+Regulatory grounding
+Human-review escalation
+Clearer implementation documentation
+
+The iteration evidence is documented in:
+
+Prompt-Templates.md
+Prompt-Documentation.md
+Prompt-Evaluation.md
+Feedback-Report.md
+Prompt-Iteration-Evidence.md
+Phase 2 Deliverables
+File	Description
+Prompt-Templates.md	Complete structured prompt templates
+Prompt-Documentation.md	Context, usage, inputs, outputs, and safety
+Prompt-Evaluation.md	Test scenarios and expected behavior
+Feedback-Report.md	Feedback and refinement process
+Prompt-Iteration-Evidence.md	Direct before/after iteration evidence
+Phase 2 Outcome
+
+Phase 2 establishes an implementation-ready prompt-engineering foundation
+for the next stage of the project.
+
+The prompts can later be connected to:
+
+OpenAI API or Gemini
+Python
+FastAPI
+LangChain
+Pydantic
+RAG pipelines
+Chroma or Pinecone
+Guardrails
+Redis
+Kafka
+
+Actual model-generated outputs will be captured and evaluated during the
+LLM integration phase.
+
+
+
+### Commit it
+
+
+Use:
+
+
+```text
+Update README with Phase 2 details
