@@ -1,278 +1,242 @@
-# Feedback Report
-
-
-## Phase 2 — Prompt Template Refinement
-
+# Prompt Feedback and Iteration Report
 
 ## 1. Purpose
 
+This document records the feedback and refinement process used to improve the
+structured AI prompt templates developed for telehealth billing and compliance.
 
-This report documents the feedback and refinement process used to improve
-the structured prompt templates for telehealth billing and compliance.
-
-
-The objective was to identify weaknesses in the initial prompt designs,
-incorporate feedback, and produce clearer and safer templates.
-
+The objective was to make the prompts clearer, safer, more consistent, and
+better suited for incomplete or conflicting healthcare data.
 
 ---
 
+## 2. Initial Prompt Design
 
-# 2. Initial Design Review
+The initial templates focused on four major use cases:
 
+1. Billing Reconciliation
+2. Billing Error Detection
+3. Compliance Risk Summarization
+4. Regulatory Knowledge Assistant
 
-The initial prompt designs focused on four major use cases:
+The first version included basic roles, input variables, instructions, and
+expected outputs.
 
-
-1. Billing reconciliation
-2. Billing error detection
-3. Compliance risk summarization
-4. Regulatory knowledge assistance
-
-
-The initial versions established the basic task, but several areas required
-improvement.
-
+However, the initial design required stronger handling of missing information,
+evidence grounding, structured responses, and human review.
 
 ---
 
+## 3. Feedback Received
 
-# 3. Feedback and Iteration
+The following improvement areas were identified during evaluation and review:
 
+- Prompt outputs should follow a consistent structure.
+- Missing information should not be invented by the AI.
+- Compliance responses should be grounded in supplied or retrieved evidence.
+- High-risk or uncertain cases should be escalated to human reviewers.
+- Prompt templates should clearly define their inputs and expected outputs.
+- The documentation should provide realistic examples of template usage.
+- The repository should clearly demonstrate how feedback resulted in changes.
 
-## Iteration 1 — Billing Reconciliation
+---
 
+## 4. Iteration 1 — Structured Output
 
 ### Initial Issue
 
-
-The initial billing reconciliation prompt identified discrepancies but did
-not clearly distinguish between missing information and actual
-discrepancies.
-
+The initial prompts described the expected response but did not consistently
+define a machine-readable output structure.
 
 ### Feedback
 
+The output should be standardized so that downstream applications can
+process the result consistently.
 
-The prompt should explicitly identify missing fields and should not assume
-values that are not present in the input.
+### Change Made
 
+The templates were updated to require structured JSON output.
 
-### Change Implemented
+### Improved Output
 
+The output now contains fields such as:
 
-The revised prompt added:
-
-
-- A `missing_fields` output field
-- An `INSUFFICIENT_DATA` status
-- An explicit instruction not to invent missing values
-- A human-review condition for incomplete records
-
+- status
+- detected_issues
+- evidence
+- missing_information
+- recommended_action
+- human_review_required
 
 ### Result
 
+The structured output makes the prompts easier to evaluate and integrate into
+future API or application workflows.
 
-The revised prompt can distinguish between:
+---
 
+## 5. Iteration 2 — Missing Data Handling
 
-```text
-Actual discrepancy
-        vs.
-Missing information
+### Initial Issue
 
-This improves reliability when billing records are incomplete.
+Healthcare billing information may be incomplete. A model could incorrectly
+attempt to fill missing values.
 
-4. Iteration 2 — Billing Error Detection
-Initial Issue
+### Feedback
 
-The initial design could identify billing problems but did not clearly
-separate warnings from confirmed errors.
+The AI should explicitly identify missing information rather than inventing
+values.
 
-Feedback
+### Change Made
 
-Potential issues such as duplicate transactions should not automatically be
-treated as confirmed fraud or wrongdoing.
+The prompts were updated with instructions such as:
 
-Change Implemented
+- Do not invent missing values.
+- Identify unavailable information explicitly.
+- Mark the relevant field as missing.
+- Request additional information when necessary.
 
-The revised prompt added:
+### Result
 
-PASS, WARNING, and ERROR validation states
+The revised prompts are safer when processing incomplete billing records.
+
+---
+
+## 6. Iteration 3 — Compliance Grounding
+
+### Initial Issue
+
+A compliance-focused AI system could produce unsupported regulatory claims
+if it is asked a question without sufficient evidence.
+
+### Feedback
+
+Compliance responses should be grounded in supplied or retrieved information.
+
+### Change Made
+
+The compliance prompts were updated to:
+
+- Use supplied regulatory context.
+- Identify the evidence supporting the result.
+- Report an information gap when evidence is insufficient.
+- Avoid inventing regulations or requirements.
+
+### Result
+
+The revised prompts reduce the risk of unsupported compliance claims.
+
+---
+
+## 7. Iteration 4 — Human Review
+
+### Initial Issue
+
+Some billing and compliance cases may be ambiguous or high-risk and should
+not be handled completely autonomously.
+
+### Feedback
+
+The system should explicitly identify cases requiring human intervention.
+
+### Change Made
+
+A `human_review_required` field was added to the structured output.
+
+The prompts instruct the AI to recommend human review when:
+
+- Important information is missing.
+- Conflicting information is detected.
+- A compliance risk is identified.
+- Regulatory evidence is insufficient.
+- The model cannot confidently determine the result.
+
+### Result
+
+The templates support a human-in-the-loop workflow rather than autonomous
+decision-making.
+
+---
+
+## 8. Example of Prompt Refinement
+
+### Before
+
+The prompt simply asked the AI to review a billing transaction and identify
+possible errors.
+
+### After
+
+The revised prompt specifies:
+
+- The role of the AI.
+- The billing information to analyze.
+- The exact validation instructions.
+- Rules for missing data.
+- Rules for conflicting information.
+- Required evidence.
+- A structured JSON output.
+- Human-review conditions.
+
+This makes the revised prompt more precise and reproducible.
+
+---
+
+## 9. Example Test Scenario
+
+### Input
+
+A billing transaction contains:
+
+- Service amount: $100
+- Insurance-approved amount: $80
+- Payment received: $60
+- Insurance ID: available
+
+### Expected Behavior
+
+The AI should identify a $20 payment discrepancy.
+
+It should not modify or invent the supplied values.
+
+### Expected Structured Result
+
+```json
+{
+  "status": "discrepancy_detected",
+  "detected_issues": [
+    "Payment received is $20 below the insurance-approved amount"
+  ],
+  "evidence": [
+    "Approved amount: $80",
+    "Payment received: $60"
+  ],
+  "missing_information": [],
+  "recommended_action": "Review payment reconciliation",
+  "human_review_required": true
+}
+10. Feedback-to-Change Mapping
+Feedback	Change Implemented
+Outputs need more structure	Added JSON output schemas
+Missing information must be handled safely	Added explicit missing-data rules
+Compliance claims require grounding	Added evidence and regulatory-context requirements
+High-risk cases need oversight	Added human-review conditions
+Templates need clearer usage	Added input, output, and example sections
+Iteration should be demonstrated	Documented before/after refinement
+11. Final Outcome
+
+The iteration process improved the prompt templates from basic task-oriented
+instructions into structured, reusable prompts with:
+
+Explicit roles
+Defined inputs
+Clear instructions
+Validation rules
+Structured outputs
 Evidence requirements
-Explicit instructions not to label transactions fraudulent without
-sufficient evidence
+Missing-data handling
+Compliance grounding
 Human-review escalation
-Result
 
-The prompt now distinguishes between a detected billing issue and a
-confirmed conclusion.
-
-5. Iteration 3 — Compliance Risk Summarization
-Initial Issue
-
-The initial compliance prompt could summarize findings but could potentially
-produce unsupported regulatory claims if sufficient regulatory context was
-not available.
-
-Feedback
-
-Compliance-related outputs must be grounded in supplied or retrieved
-evidence.
-
-Change Implemented
-
-The revised prompt added:
-
-Retrieved regulatory context as an explicit input
-A rule against inventing regulations or citations
-An INSUFFICIENT_CONTEXT risk state
-Supporting evidence fields
-Human-review escalation for high-risk cases
-Result
-
-The revised template is better suited for grounded compliance analysis and
-reduces the risk of unsupported regulatory claims.
-
-6. Iteration 4 — Regulatory Knowledge Assistant
-Initial Issue
-
-The initial regulatory assistant did not explicitly define what should
-happen when the retrieved information was insufficient.
-
-Feedback
-
-The assistant should clearly acknowledge information gaps instead of
-generating unsupported answers.
-
-Change Implemented
-
-The revised prompt added:
-
-Retrieved regulatory context as an input
-Organization policy as a separate input
-An information_gap output field
-A confidence field
-Explicit instructions not to invent regulations
-Human-review escalation for high-risk questions
-Result
-
-The revised template is designed to provide evidence-based responses and
-clearly identify when additional information is required.
-
-7. Cross-Template Improvements
-
-Feedback across the four templates resulted in several common improvements.
-
-Area	Initial Design	Revised Design
-Missing information	Not consistently defined	Explicit missing-data handling
-Output	General response	Structured JSON
-Evidence	Limited	Evidence fields added
-Regulatory grounding	Basic	Retrieved-context requirement
-Safety	General instructions	Explicit safety rules
-Human oversight	Limited	Review conditions defined
-Uncertainty	Not standardized	Explicit uncertainty states
-Testing	Basic examples	Normal and edge-case scenarios
-8. Example of Prompt Refinement
-Before
-Compare the billing records and identify discrepancies.
-Problem
-
-This instruction is too broad and does not define:
-
-What records should be compared
-How missing data should be handled
-What output should be generated
-When human review is required
-After
-Compare the supplied service, invoice, insurance, and payment records.
-
-
-Identify:
-1. Matching fields
-2. Actual discrepancies
-3. Missing fields
-
-
-Do not invent missing values.
-
-
-Return a structured JSON response containing:
-- status
-- discrepancies
-- missing_fields
-- evidence
-- recommended_action
-- human_review_required
-Improvement
-
-The revised prompt provides:
-
-Clearer instructions
-Explicit inputs
-Safer handling of missing data
-Consistent output
-Easier downstream integration
-Human-review escalation
-9. Evaluation Feedback Incorporated
-
-The evaluation process identified the following important requirements:
-
-Requirement 1 — Structured Output
-
-Prompts should return predictable JSON structures so their results can be
-consumed by downstream systems.
-
-Requirement 2 — Grounded Responses
-
-Compliance and regulatory responses should use supplied or retrieved
-evidence rather than unsupported model knowledge.
-
-Requirement 3 — Missing Data Handling
-
-The model should identify missing information instead of guessing values.
-
-Requirement 4 — Human Oversight
-
-High-risk, uncertain, or incomplete cases should be escalated to qualified
-human reviewers.
-
-Requirement 5 — Adversarial Safety
-
-Prompts should resist instructions that attempt to override safety rules or
-generate unsupported compliance claims.
-
-10. Final Refinement Outcome
-
-The feedback and evaluation process resulted in the following improvements:
-
-More explicit task definitions
-Reusable input variables
-Structured JSON schemas
-Better missing-data handling
-Evidence-based outputs
-Regulatory grounding
-Human-review conditions
-Improved safety instructions
-More consistent evaluation criteria
-
-These changes make the prompt templates clearer, safer, and more suitable
-for integration into a future telehealth billing and compliance AI system.
-
-11. Future Feedback Plan
-
-Before production use, the templates should be reviewed by appropriate
-billing and compliance professionals.
-
-Future refinement should include:
-
-Domain-expert review
-Testing with realistic de-identified billing data
-Additional edge cases
-LLM-to-LLM comparison
-Accuracy measurement
-False-positive and false-negative analysis
-Security and privacy testing
-
-The prompts are intended to support human decision-making and should not
-replace qualified billing, compliance, or legal professionals.
+These changes make the templates more suitable for future implementation in
+an AI-powered telehealth billing and compliance workflow.
