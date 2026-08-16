@@ -1,115 +1,182 @@
-# Feedback Report
+# Phase 2 Feedback and Iteration Report
 
-## Phase 1: Identify AI Opportunities
+## 1. Purpose
 
-### 1. Purpose
+This report documents the feedback received during the Phase 2 review
+process and the changes made to improve the structured prompt templates.
 
-This report documents the feedback received on the proposed AI opportunities for VeriHealth Solutions and the improvements made based on that feedback.
+The refinement process followed:
 
-The objective was to ensure that the identified AI applications were relevant to VeriHealth's billing and compliance challenges, technically feasible, and aligned with the subsequent project phases.
+Initial Design
+→ Evaluation
+→ Feedback
+→ Prompt Refinement
+→ Re-evaluation
 
-## 2. Initial AI Opportunities Presented
+The main areas of improvement were prompt specificity, structured
+outputs, healthcare safety, evidence grounding, and human oversight.
 
-The initial proposal included the following opportunities:
+---
 
-1. Intelligent Billing Reconciliation
-2. AI-Powered Compliance Checking
-3. Billing Anomaly Detection
+# 2. Initial Design
+
+The initial Phase 2 approach focused on creating prompt templates for the
+priority AI opportunities identified during Phase 1.
+
+The initial templates contained:
+
+- Role definitions
+- Objectives
+- Input context
+- General instructions
+- Expected outputs
+- Basic safety constraints
+
+However, the initial design did not provide enough direct evidence of
+detailed prompt structure, iteration, or testing.
+
+---
+
+# 3. Feedback Received
+
+The QCraque evaluation identified the following improvement areas.
+
+## Feedback 1 — Provide Structured Prompt Templates
+
+### Feedback
+
+The repository needed clearer evidence of actual structured prompt
+templates rather than only descriptions of prompt design.
+
+### Problem Identified
+
+High-level descriptions do not demonstrate how a developer would actually
+use the prompt.
+
+### Change Made
+
+The `Prompt-Templates.md` file was expanded to include complete reusable
+templates containing:
+
+- System role
+- Purpose
+- Input variables
+- Explicit instructions
+- Validation rules
+- Safety constraints
+- Output JSON schemas
+- Example inputs
+- Expected outputs
+- Human-review conditions
+
+### Result
+
+The repository now contains copy-paste-ready prompt templates for:
+
+1. Billing Reconciliation
+2. Billing Error Detection
+3. Compliance Risk Summarization
 4. Regulatory Knowledge Assistant
-5. Automated Billing Document and Data Extraction
-6. Compliance Risk Summarization
 
-## 3. Feedback Summary
+---
 
-The proposed opportunities were reviewed from the perspective of business relevance, feasibility, AI applicability, and healthcare compliance.
+# 4. Feedback 2 — Improve Documentation
 
-### Feedback 1: Focus on Direct Business Impact
+### Feedback
 
-**Feedback:**  
-The AI opportunities should have a clear connection to VeriHealth's major business problems, particularly the reported $3 million annual loss and manual reconciliation costs.
+The evaluator indicated that the repository needed clearer
+documentation explaining the context and usage of each template.
 
-**Action Taken:**  
-Intelligent Billing Reconciliation and AI-Powered Compliance Checking were given the highest priority because they directly address billing discrepancies, revenue leakage, operational costs, and compliance risks.
+### Problem Identified
 
-### Feedback 2: Avoid Unnecessary AI Usage
+The purpose of each prompt and its position in the overall workflow were
+not sufficiently explicit.
 
-**Feedback:**  
-AI should not be introduced where traditional deterministic rules or validation would be more reliable.
+### Change Made
 
-**Action Taken:**  
-The proposed architecture combines rule-based validation with AI rather than relying entirely on an LLM. AI is used for tasks such as information extraction, semantic analysis, regulatory retrieval, and explanation.
+`Prompt-Documentation.md` was expanded to document:
 
-### Feedback 3: Include Human Oversight
+- Business problem
+- Prompt purpose
+- Intended users
+- Required inputs
+- Processing behavior
+- Expected outputs
+- Human-review conditions
+- RAG integration
+- Safety considerations
+- Future system integration
 
-**Feedback:**  
-Healthcare compliance decisions can have significant consequences, so high-risk AI outputs should not be accepted without appropriate human review.
+### Result
 
-**Action Taken:**  
-A human review step was included for risk and non-compliant cases. The AI system is designed to assist compliance teams rather than replace human decision-making.
+A developer can now understand when and how each prompt should be used.
 
-### Feedback 4: Improve Regulatory Grounding
+---
 
-**Feedback:**  
-An LLM should not generate regulatory answers without reliable supporting information.
+# 5. Feedback 3 — Add Testing Evidence
 
-**Action Taken:**  
-A Retrieval-Augmented Generation (RAG) approach was selected. Regulatory information will be retrieved from an approved knowledge base before being provided to the LLM.
+### Feedback
 
-### Feedback 5: Ensure Practical Implementation
+The evaluation required stronger evidence that the prompt templates could
+handle realistic inputs and edge cases.
 
-**Feedback:**  
-The selected opportunities should be realistic enough to demonstrate through a proof of concept.
+### Problem Identified
 
-**Action Taken:**  
-The final recommendations were aligned with the planned technology stack, including Python, FastAPI, LangChain, OpenAI/Gemini, vector databases, Redis, Kafka, and guardrails.
+Simply describing a prompt does not demonstrate how it behaves with
+different types of input.
 
-## 4. Changes Made After Feedback
+### Change Made
 
-Based on the feedback, the project direction was refined in the following ways:
+`Prompt-Evaluation.md` was expanded with test scenarios covering:
 
-| Area | Initial Approach | Revised Approach |
-|---|---|---|
-| Billing | General billing automation | Intelligent reconciliation and discrepancy identification |
-| Compliance | General AI compliance | Rule-based validation + RAG + LLM assistance |
-| Regulatory information | Direct LLM questions | Retrieval from an approved knowledge base |
-| AI decisions | Fully automated | Human-in-the-loop for high-risk cases |
-| AI output | Free-form responses | Structured and validated output |
-| Project scope | Multiple independent AI features | Three prioritized opportunities |
+- Normal billing transactions
+- Payment discrepancies
+- Missing information
+- Missing insurance information
+- Compliance risks
+- Insufficient regulatory context
+- Grounded regulatory questions
+- Missing retrieved context
+- Edge cases
+- Safety conditions
 
-## 5. Final Priorities
+### Result
 
-The final priorities for subsequent project phases are:
+The project now documents expected behavior for normal, incomplete,
+conflicting, and high-risk scenarios.
 
-### Priority 1 — Intelligent Billing Reconciliation
+---
 
-Focus on identifying and explaining billing discrepancies to reduce manual reconciliation effort and revenue leakage.
+# 6. Feedback 4 — Demonstrate Iteration
 
-### Priority 2 — AI-Powered Compliance Checking
+### Feedback
 
-Focus on combining deterministic compliance rules with RAG and LLM assistance to identify potential compliance risks.
+The evaluation indicated that the repository did not clearly show how
+feedback resulted in specific prompt changes.
 
-### Priority 3 — Regulatory Knowledge Assistant
+### Problem Identified
 
-Focus on retrieving relevant regulatory information and providing grounded responses to authorized users.
+The previous documentation described refinement but did not clearly show
+the relationship between the original prompt, the identified weakness,
+and the revised prompt.
 
-## 6. Key Outcome
+### Change Made
 
-The feedback process helped refine the project from a broad collection of possible AI applications into a focused set of high-value opportunities.
+A direct iteration evidence document was created:
 
-The revised approach prioritizes:
+`Prompt-Iteration-Evidence.md`
 
-- Direct business value
-- Practical implementation
-- Reliable regulatory grounding
-- Human oversight
-- Structured AI outputs
-- Healthcare data protection
-- Scalability
+The document records:
 
-These decisions provide a clear foundation for the next phases of the project, including prompt engineering, LLM integration, RAG implementation, and evaluation.
-
-## 7. Conclusion
-
-The feedback review confirmed that the proposed AI opportunities should be closely connected to VeriHealth's financial and operational challenges.
-
-The final project direction therefore focuses on intelligent billing reconciliation, AI-assisted compliance checking, and a RAG-based regulatory knowledge assistant. These capabilities provide a practical balance between automation, accuracy, safety, and business value.
+```text
+Initial Prompt
+      ↓
+Problem Identified
+      ↓
+Feedback
+      ↓
+Prompt Modification
+      ↓
+Test Scenario
+      ↓
+Expected Improvement
