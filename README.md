@@ -122,233 +122,154 @@ Scalable AI-Assisted Billing & Compliance PoC
 
 ## Objective
 
-Phase 2 focuses on designing structured prompt templates for the AI opportunities identified during Phase 1.
-
-The goal is to create reusable prompts that can later be connected to OpenAI or Gemini through a FastAPI-based backend.
-
-## AI Use Cases
-
-Three priority AI capabilities were selected:
-
-### 1. Intelligent Billing Reconciliation
-
-The AI compares billing transactions, invoices, service records, payment information, and business rules to identify discrepancies.
-
-Expected benefits:
-
-- Reduced manual reconciliation
-- Faster discrepancy detection
-- Reduced revenue leakage
-- Consistent analysis
-
-### 2. AI-Powered Compliance Checking
-
-The AI evaluates supplied transactions against approved compliance rules and organizational policies.
-
-Expected benefits:
-
-- Earlier identification of potential compliance issues
-- Consistent compliance analysis
-- Reduced manual review workload
-- Better risk prioritization
-
-### 3. Regulatory Knowledge Assistant
-
-A future RAG-based assistant will retrieve relevant approved regulatory and organizational documents and provide grounded responses to compliance questions.
-
-Expected benefits:
-
-- Faster access to compliance information
-- Evidence-based answers
-- Reduced unsupported AI responses
-- Source traceability
-
-## Prompt Engineering Approach
-
-The prompts use:
-
-- Role definition
-- Explicit objectives
-- Context injection
-- Reusable variables
-- Structured instructions
-- JSON output
-- Evidence requirements
-- Missing-data handling
-- Human-review escalation
-- Safety constraints
-- RAG grounding
-
-## Example Prompt Flow
-
-```text
-Business Scenario
-       ↓
-Identify Required Inputs
-       ↓
-Prompt Template
-       ↓
-LLM
-       ↓
-Structured JSON Output
-       ↓
-Validation
-       ↓
-Human Review when Required
 # Phase 2 — Design Prompt Templates
+
 
 ## Objective
 
-Phase 2 converts the AI opportunities identified in Phase 1 into reusable,
-structured prompt templates for healthcare billing and compliance workflows.
 
-The objective is to create prompts that are:
+Phase 2 converts the AI opportunities identified in Phase 1 into reusable
+prompt templates for telehealth billing and compliance workflows.
 
-- Clear and reusable
-- Structured for application integration
-- Grounded in supplied evidence
-- Safe for healthcare-related workflows
-- Capable of handling incomplete information
-- Designed for human oversight
 
-## AI Use Cases
+The templates are designed to improve consistency, reduce unsupported AI
+outputs, handle incomplete information, and provide structured results that
+can later be integrated into an AI application.
 
-Four structured prompt templates were developed:
+
+---
+
+
+## Structured AI Prompt Templates
+
+
+Four primary prompt templates were developed.
+
 
 ### 1. Billing Reconciliation
 
-Identifies discrepancies between service, invoice, insurance, and payment
-information.
+
+**Purpose:**  
+Compare service, invoice, insurance, and payment records to identify billing
+discrepancies.
+
+
+**Inputs:**
+
+
+- Service record
+- Invoice record
+- Insurance record
+- Payment record
+
+
+**Output:**
+
+
+A structured JSON result containing:
+
+
+- Reconciliation status
+- Detected discrepancies
+- Missing fields
+- Supporting evidence
+- Recommended action
+- Human-review requirement
+
+
+**Example use case:**
+
+
+If the insurance-approved amount is `$80` but only `$60` was received, the
+prompt identifies the `$20` discrepancy and recommends review.
+
+
+---
+
 
 ### 2. Billing Error Detection
 
-Identifies missing fields, inconsistent billing information, possible
-duplicates, and other billing errors before final processing.
 
-### 3. Compliance Risk Summarization
+**Purpose:**  
+Identify incomplete, inconsistent, or potentially duplicated billing
+transactions before final processing.
 
-Converts compliance findings into a standardized risk summary containing
-evidence, risk level, regulatory basis, and recommended action.
 
-### 4. Regulatory Knowledge Assistant
+**Inputs:**
 
-Provides grounded answers to billing and compliance questions using
-retrieved regulatory and organizational context.
 
-## Prompt Structure
+- Billing transaction
+- Patient/service information
+- Provider information
+- Payment information
 
-Each template contains:
 
-- Purpose
-- Input variables
-- System role
-- Explicit instructions
-- Validation rules
-- Safety constraints
-- Structured JSON output
-- Example input
-- Expected output
-- Human-review conditions
+**Output:**
 
-## Prompt Engineering Techniques
 
-The templates demonstrate:
+A structured validation result containing:
 
-- Role prompting
-- Context injection
-- Explicit task instructions
-- Reusable prompt variables
-- Structured JSON output
-- Evidence-based responses
-- Missing-data handling
-- Human-in-the-loop escalation
-- RAG grounding
-- Prompt-injection considerations
 
-## Evaluation
+- Validation status
+- Detected issues
+- Missing fields
+- Evidence
+- Recommended action
+- Human-review requirement
 
-The prompts were evaluated against:
 
-- Normal billing transactions
-- Payment discrepancies
-- Missing information
-- Conflicting information
-- Compliance risks
-- Insufficient regulatory context
-- Grounded regulatory questions
-- Missing retrieved context
-- Adversarial instructions
+**Example use case:**
 
-The evaluation defines expected behavior for each scenario and identifies
-areas requiring human review.
 
-## Feedback and Iteration
+If an insurance ID is missing, the prompt identifies the missing field
 
-The prompt design followed an iterative process:
+Examples of improvements include:
 
-```text
-Initial Prompt
-      ↓
-Evaluation
-      ↓
-Feedback
-      ↓
-Problem Identification
-      ↓
-Prompt Refinement
-      ↓
-Re-evaluation
-The refinement process resulted in:
+Adding explicit missing-data handling
+Adding structured JSON output
+Adding evidence fields
+Adding regulatory-context requirements
+Adding information-gap handling
+Adding human-review escalation
+Preventing unsupported compliance claims
 
-More explicit prompt instructions
-Reusable input variables
-Structured JSON schemas
-Example inputs and outputs
-Stronger missing-data handling
-Regulatory grounding
-Human-review escalation
-Clearer implementation documentation
+Detailed refinement evidence is available in:
 
-The iteration evidence is documented in:
+Phase-2-Design-Prompt-Templates/Feedback-Report.md
 
-Prompt-Templates.md
-Prompt-Documentation.md
-Prompt-Evaluation.md
-Feedback-Report.md
 Phase 2 Deliverables
-File	Description
-Prompt-Templates.md	Complete structured prompt templates
-Prompt-Documentation.md	Context, usage, inputs, outputs, and safety
-Prompt-Evaluation.md	Test scenarios and expected behavior
-Feedback-Report.md	Feedback and refinement process
-Phase 2 Outcome
+File	Purpose
+Prompt-Templates.md	Complete structured prompts with inputs, instructions, outputs, and examples
+Prompt-Documentation.md	Detailed documentation of context, usage, safety, and implementation
+Prompt-Evaluation.md	Evaluation methodology, test cases, expected behavior, and results
+Feedback-Report.md	Feedback, iteration history, and prompt refinement evidence
+Safety and Human Oversight
 
-Phase 2 establishes an implementation-ready prompt-engineering foundation
-for the next stage of the project.
+These prompts are designed as decision-support components and are not
+intended to make autonomous billing, compliance, legal, or clinical
+decisions.
 
-The prompts can later be connected to:
+The templates explicitly instruct the AI to:
 
-OpenAI API or Gemini
+Avoid inventing missing information
+Avoid unsupported regulatory claims
+Identify information gaps
+Use supplied or retrieved evidence
+Escalate high-risk or uncertain cases
+Keep qualified humans involved in final decisions
+Future Integration
+
+The prompt templates can later be integrated with technologies such as:
+
 Python
 FastAPI
-LangChain
-Pydantic
+LLM APIs
 RAG pipelines
-Chroma or Pinecone
+Pydantic
+Vector databases
 Guardrails
-Redis
-Kafka
+Human-review workflows
 
-Actual model-generated outputs will be captured and evaluated during the
-LLM integration phase.
-
-
-
-### Commit it
-
-
-Use:
-
-
-```text
-Update README with Phase 2 details
+The next implementation phase can connect these templates to an actual LLM
+pipeline and evaluate generated outputs using realistic de-identified test
+data.
