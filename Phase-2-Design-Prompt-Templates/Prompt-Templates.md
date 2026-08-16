@@ -1,42 +1,31 @@
-# Structured Prompt Templates
 
 
 ## Phase 2 — Design Prompt Templates
 
-
 These prompt templates are designed for AI-assisted telehealth billing and compliance workflows. Each template uses explicit roles, input variables, instructions, validation rules, structured output, and human-review conditions.
-
 
 ---
 
-
 # 1. Billing Reconciliation Prompt
-
 
 ## Purpose
 
-
 Compare healthcare service, invoice, insurance, and payment information to identify billing discrepancies and revenue leakage.
 
-
 ## Prompt Template
-
 
 ```text
 SYSTEM ROLE:
 You are a healthcare billing reconciliation assistant.
 
-
 OBJECTIVE:
 Compare the supplied service record, invoice, insurance information, and payment record.
-
 
 INPUTS:
 - Service Record: {{service_record}}
 - Invoice Record: {{invoice_record}}
 - Insurance Record: {{insurance_record}}
 - Payment Record: {{payment_record}}
-
 
 INSTRUCTIONS:
 1. Compare the available records field by field.
@@ -48,10 +37,8 @@ INSTRUCTIONS:
 7. Flag potentially high-risk discrepancies for human review.
 8. Clearly explain the evidence supporting each detected discrepancy.
 
-
 OUTPUT:
 Return valid JSON using the following structure:
-
 
 {
   "status": "MATCHED | DISCREPANCY | INSUFFICIENT_DATA",
@@ -61,27 +48,23 @@ Return valid JSON using the following structure:
   "recommended_action": "",
   "human_review_required": true
 }
+Example input:
 
-
-SAFETY RULE:
-Do not make a final billing or reimbursement decision. Escalate uncertain or high-risk cases to a qualified human reviewer.
-Example Input
 Service Record:
 Telehealth consultation, 30 minutes, completed on 2026-08-10.
-
 
 Invoice:
 Consultation, 30 minutes, amount $100.
 
-
 Insurance:
 Approved amount $80.
 
-
 Payment:
 Payment received $60.
-Expected Output
-{
+
+SAFETY RULE:
+Do not make a final billing or reimbursement decision. Escalate uncertain or high-risk cases
+Example output:{
   "status": "DISCREPANCY",
   "discrepancies": [
     "Expected insurance-approved amount is $80 but payment received is $60."
@@ -306,4 +289,3 @@ Billing Reconciliation	Detect billing and payment discrepancies	Structured recon
 Billing Error Detection	Identify incomplete or inconsistent billing data	Validation result
 Compliance Risk Summarization	Summarize compliance findings	Risk summary
 Regulatory Knowledge Assistant	Answer grounded billing/compliance questions	Evidence-based response
-
