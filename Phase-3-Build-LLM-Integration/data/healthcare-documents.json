@@ -1,0 +1,32 @@
+[
+  {
+    "id": "DOC001",
+    "title": "Telehealth Billing Documentation",
+    "category": "billing",
+    "content": "Telehealth billing records should contain the service date, service type, provider information, billing amount, and relevant insurance information. Missing required billing information should be corrected before final submission."
+  },
+  {
+    "id": "DOC002",
+    "title": "Payment Reconciliation Guidance",
+    "category": "billing",
+    "content": "Payment reconciliation compares the invoiced amount, insurance-approved amount, and payment received. Differences between the approved amount and payment received should be reviewed before closing the transaction."
+  },
+  {
+    "id": "DOC003",
+    "title": "Telehealth Consent Documentation",
+    "category": "compliance",
+    "content": "Telehealth workflows should maintain appropriate documentation of patient consent according to applicable organizational policies and requirements."
+  },
+  {
+    "id": "DOC004",
+    "title": "Missing Insurance Information",
+    "category": "billing",
+    "content": "If an insurance identifier is missing from a billing transaction, the transaction should be reviewed and the missing information should be obtained before final billing."
+  },
+  {
+    "id": "DOC005",
+    "title": "Billing Error Review",
+    "category": "compliance",
+    "content": "Potential billing errors should be reviewed using the available evidence. The system should not assume missing information or label a transaction fraudulent without sufficient evidence."
+  }
+]

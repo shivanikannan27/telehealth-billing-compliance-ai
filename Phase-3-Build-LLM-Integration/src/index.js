@@ -4,7 +4,7 @@ const http = require("http");
 const { callLLM } = require("./llmClient");
 const { checkRateLimit } = require("./rateLimiter");
 const { safeErrorResponse } = require("./errorHandler");
-
+const { client } = require("./elasticsearchClient");
 const PORT = process.env.PORT || 3000;
 
 function sendJSON(res, statusCode, data) {
@@ -85,16 +85,35 @@ const server = http.createServer(async (req, res) => {
           error: "billing_data is required"
         });
       }
+      const billingText = JSON.stringify(body.billing_data);
+
+const searchResult = await client.search({
+  index: "healthcare_documents",
+  query: {
+    multi_match: {
+      query: billingText,
+      fields: ["title", "category", "content"]
+    }
+  },
+  size: 3
+});
+
+const relevantDocuments = searchResult.hits.hits.map(
+  (hit) => hit._source
+);
 
       /*
        * Only synthetic/de-identified billing data should be sent to the
        * LLM during development and testing.
        */
       const prompt = `
-Analyze the following telehealth billing information.
+Analyze the following telehealth billing information using the provided healthcare reference documents.
 
 Billing data:
 ${JSON.stringify(body.billing_data)}
+
+Relevant healthcare reference documents:
+${JSON.stringify(relevantDocuments)}
 
 Identify:
 1. Billing discrepancies
@@ -102,6 +121,7 @@ Identify:
 3. Evidence for each finding
 4. Recommended next action
 
+Use the reference documents as supporting evidence.
 Do not invent missing information.
 Do not make legal or medical decisions.
 Return a concise structured analysis.
