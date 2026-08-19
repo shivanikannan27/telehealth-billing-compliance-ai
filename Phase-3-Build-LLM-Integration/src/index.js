@@ -4,7 +4,7 @@ const http = require("http");
 const { callLLM } = require("./llmClient");
 const { checkRateLimit } = require("./rateLimiter");
 const { safeErrorResponse } = require("./errorHandler");
-const { client } = require("./elasticsearchClient");
+const { retrieveRelevantContext } = require("./ragRetriever");
 const PORT = process.env.PORT || 3000;
 
 function sendJSON(res, statusCode, data) {
@@ -87,19 +87,9 @@ const server = http.createServer(async (req, res) => {
       }
       const billingText = JSON.stringify(body.billing_data);
 
-const searchResult = await client.search({
-  index: "healthcare_documents",
-  query: {
-    multi_match: {
-      query: billingText,
-      fields: ["title", "category", "content"]
-    }
-  },
-  size: 3
-});
-
-const relevantDocuments = searchResult.hits.hits.map(
-  (hit) => hit._source
+const relevantDocuments = await retrieveRelevantContext(
+  billingText,
+  3
 );
 
       /*
